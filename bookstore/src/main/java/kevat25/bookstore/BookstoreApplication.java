@@ -18,13 +18,9 @@ public class BookstoreApplication {
 	@Bean
 	public CommandLineRunner demo(BookRepository repository) {
 		return (args) -> {
-			Book book1 = new Book("Sormuksen ritarit", "J.R.R. Tolkien", "978-951-0-33337-2", 1954, 19.99);
-			Book book2 = new Book("Kaksi tornia", "J.R.R. Tolkien", "978-951-0-33337-3", 1954, 19.99);
-			Book book3 = new Book("Kuninkaan paluu", "J.R.R. Tolkien", "978-951-0-33337-4", 1955, 19.99);
-
-			repository.save(book1);
-			repository.save(book2);
-			repository.save(book3);
+			repository.save(new Book("Sormuksen ritarit", "J.R.R. Tolkien", "978-951-0-33337-2", 1954, 19.99));
+			repository.save(new Book("Kaksi tornia", "J.R.R. Tolkien", "978-951-0-33337-3", 1954, 19.99));
+			repository.save(new Book("Kuninkaan paluu", "J.R.R. Tolkien", "978-951-0-33337-4", 1955, 19.99));
 
 		};
 	}
