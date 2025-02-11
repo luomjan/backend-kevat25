@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -39,8 +38,10 @@ public class BookstoreController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String save(@Valid Book book, BindingResult bindingResult) {
+    public String save(@Valid @ModelAttribute("book") Book book, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("book", book);
+            model.addAttribute("categorys", crepository.findAll());
             return "addbook";
         }
         repository.save(book);

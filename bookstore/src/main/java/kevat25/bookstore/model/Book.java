@@ -10,12 +10,21 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Title field cannot be empty")
+    @NotEmpty(message = "Title cannot be empty")
     @Size(min = 2, max = 250)
     private String title;
 
-    private String author, isbn;
+    @NotEmpty(message = "Author cannot be empty")
+    @Size(min = 3, max = 250)
+    private String author;
+
+    private String isbn;
+
+    @Min(value = 1001, message = "Publication year must be after 1000")
+    @Max(value = 2025, message = "Publication year can't be in future")
     private int publicationYear;
+
+    @Min(value = 0, message = "Price can't be negative")
     private double price;
 
     @ManyToOne
