@@ -1,5 +1,7 @@
 package kevat25.bookstore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
@@ -27,6 +29,7 @@ public class Book {
     @Min(value = 0, message = "Price can't be negative")
     private double price;
 
+    @JsonIgnoreProperties("books")
     @ManyToOne
     @JoinColumn(name = "categoryid")
     private Category category;
