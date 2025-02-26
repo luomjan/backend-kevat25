@@ -7,6 +7,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import kevat25.bookstore.model.AppUser;
+import kevat25.bookstore.model.AppUserRepository;
 import kevat25.bookstore.model.Book;
 import kevat25.bookstore.model.BookRepository;
 import kevat25.bookstore.model.Category;
@@ -22,7 +24,8 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(BookRepository repository, CategoryRepository categoryRepository) {
+	public CommandLineRunner demo(BookRepository repository, CategoryRepository categoryRepository,
+			AppUserRepository urepository) {
 		return (args) -> {
 
 			log.info("save categorys");
@@ -37,6 +40,13 @@ public class BookstoreApplication {
 					categoryRepository.findByName("Fantasy").get(0)));
 			repository.save(new Book("Kuninkaan paluu", "J.R.R. Tolkien", "978-951-0-33337-4", 1955, 19.99,
 					categoryRepository.findByName("Fantasy").get(0)));
+
+			log.info("save user and admin");
+			AppUser user1 = new AppUser("user", "$2a$10$0.CyWO.KVDv.I.LBt/LnMOMMMikflaK3o0z.gjnEaL1nJKwzV1ZUy", "USER");
+			AppUser user2 = new AppUser("admin", "$2a$10$4/4hbxOU1OigHnAAhitiLu7EP43TgdjX.8Nzcyq.UmSsUDSGPFSEK",
+					"ADMIN");
+			urepository.save(user1);
+			urepository.save(user2);
 
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {

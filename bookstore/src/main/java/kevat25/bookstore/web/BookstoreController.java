@@ -1,6 +1,7 @@
 package kevat25.bookstore.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,11 @@ public class BookstoreController {
 
     @Autowired
     private CategoryRepository crepository;
+
+    @RequestMapping(value = "/login")
+    public String login() {
+        return "login";
+    }
 
     @RequestMapping(value = { "/", "/booklist" })
     public String showBookList(Model model) {
@@ -48,12 +54,14 @@ public class BookstoreController {
         return "redirect:/booklist";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long bookId) {
         repository.deleteById(bookId);
         return "redirect:../booklist";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/edit/{id}")
     public String editBook(@PathVariable("id") Long bookId, Model model) {
         Book book = repository.findById(bookId).orElse(null);
