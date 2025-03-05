@@ -27,7 +27,7 @@ public class BookstoreApplication {
 	public CommandLineRunner demo(BookRepository repository, CategoryRepository categoryRepository,
 			AppUserRepository urepository) {
 		return (args) -> {
-
+			if (categoryRepository.count() == 0) {
 			log.info("save categorys");
 			categoryRepository.save(new Category("Fantasy"));
 			categoryRepository.save(new Category("Horror"));
@@ -47,7 +47,7 @@ public class BookstoreApplication {
 					"ADMIN");
 			urepository.save(user1);
 			urepository.save(user2);
-
+}
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
 				log.info(book.toString());
